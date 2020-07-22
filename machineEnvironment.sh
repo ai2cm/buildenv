@@ -34,7 +34,6 @@ queue=""        # standard queue to submit jobs to
 nthreads=""     # number of threads to use for parallel builds
 mpilaunch=""    # command to launch an MPI executable (e.g. aprun)
 installdir=""   # directory where libraries are installed
-testdata=""     # directory where unittestdata is stored
 
 # setup machine specifics
 if [ "`hostname | grep daint`" != "" ] ; then
@@ -45,40 +44,23 @@ if [ "`hostname | grep daint`" != "" ] ; then
     queue="normal"
     nthreads=8
     mpilaunch="srun"
-    installdir=/project/c14/install/${host}
-    testdata=/scratch/snx3000/jenkins/data
+    installdir=/project/d107/install/${host}
     export CUDA_ARCH=sm_60
-elif [ "`hostname | grep dom`" != "" ] ; then
-    . /etc/bash.bashrc
-    . /opt/modules/default/init/bash
-    . /etc/bash.bashrc.local
-    export host="dom"
+elif [ "`hostname | grep papaya`" != "" ] ; then
+    alias module=echo
+    export host="papaya"
     queue="normal"
-    nthreads=8
-    mpilaunch="srun"
-    installdir=/project/c14/install/${host}
-    testdata=/scratch/snx3000/jenkins/data
+    nthreads=6
+    mpilaunch="mpirun"
+    installdir=/Users/OliverF/Desktop/install
+elif [ "`hostname | grep gce-cpu`" != "" ] ; then
+    alias module=echo
+    export host="gce-cpu"
+    queue="normal"
+    nthreads=6
+    mpilaunch="mpirun"
+    installdir=/tmp
     export CUDA_ARCH=sm_60
-elif [ "`hostname | grep dora`" != "" ] ; then
-    . /etc/bash.bashrc
-    . /opt/modules/default/init/bash
-    export host="dora"
-    queue="normal"
-    nthreads=8
-    mpilaunch="aprun"
-    installdir=/project/c14/install/daint
-    testdata=/scratch/dora/jenkins/data
-## Disabled block for testing a particular kesch node with special environment
-elif [[ "$(hostname)" == "keschcn-0012"* ]]; then
-    . /etc/bashrc && true # In some conditions the omitted true triggered an error.
-    export host="kesch-test"
-    echo "The host is ${host}"
-    queue="debug"
-    nthreads=1
-    mpilaunch="srun"
-    installdir="/project/c14/install/${host}"
-    testdata="/scratch/jenkins/data"
-    export CUDA_ARCH=sm_37
 elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; then
     . /etc/bashrc && true # In some conditions the omitted true triggered an error.
     if [ "${NODE_NAME}" == kesch-pgi ] ; then
@@ -89,8 +71,7 @@ elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; th
     queue="debug"
     nthreads=1
     mpilaunch="srun"
-    installdir="/project/c14/install/${host}"
-    testdata="/scratch/jenkins/data"
+    installdir="/project/d107/install/${host}"
     export CUDA_ARCH=sm_37
 elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; then
     . /etc/bashrc
@@ -98,8 +79,7 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
     queue="debug"
     nthreads=1
     mpilaunch="srun"
-    installdir="/project/c14/install/tsa"
-    testdata="/scratch/jenkins/data"
+    installdir="/project/d107/install/tsa"
     export CUDA_ARCH=sm_70
 fi
 
@@ -112,5 +92,4 @@ test -n "${installdir}" || exitError 2005 ${LINENO} "Variable <installdir> could
 
 # export installation directory
 export INSTALL_DIR="${installdir}"
-export TESTDATA_DIR="${testdata}"
 

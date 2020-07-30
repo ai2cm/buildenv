@@ -1,13 +1,14 @@
 #!/bin/bash
-#SBATCH --constraint=gpu
 #SBATCH --job-name=<NAME>
+#SBATCH --output=<OUTFILE>
+#SBATCH --account=d107
 #SBATCH --ntasks=<NTASKS>
 #SBATCH --ntasks-per-node=<NTASKSPERNODE>
 #SBATCH --cpus-per-task=<CPUSPERTASK>
-#SBATCH --output=<OUTFILE>
-#SBATCH --time=00:45:00
+#SBATCH --partition=<PARITION>
+#SBATCH --time=00:30:00
 #SBATCH --gres=gpu:1
-#SBATCH --account=d107
+#SBATCH --constraint=gpu
 
 ########################################################
 

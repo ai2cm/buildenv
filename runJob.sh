@@ -4,9 +4,8 @@ SCRIPT=$2
 OUT=$3
 maxsleep=9000
 envdir=`dirname $0`
-. ${envdir}/machineEnvironment.sh
+${envdir}/machineEnvironment.sh
 if [ "${useslurm}" = true ] ; then
-    . ${envdir}/machineEnvironment.sh
     # check if SLURM script exists, if not, use the standard one defined by the host
     test -f ${SCRIPT} || SCRIPT="${envdir}/submit.${host}.slurm"
     # test if the SLURM script exists, if not useslurm should not be true

@@ -4,9 +4,10 @@ SCRIPT=$2
 OUT=$3
 maxsleep=9000
 envdir=`dirname $0`
-echo ${envdir}
-echo `pwd`
 . ${envdir}/machineEnvironment.sh
+echo "use slurm"
+echo ${useslurm}
+echo "${useslurm}" = true
 if [ "${useslurm}" = true ] ; then
     # check if SLURM script exists, if not, use the standard one defined by the host
     test -f ${SCRIPT} || SCRIPT="${envdir}/submit.${host}.slurm"

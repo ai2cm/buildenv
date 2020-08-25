@@ -83,7 +83,7 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
     export CUDA_ARCH=sm_70
 fi
 
-if [ test -f "submit.${host}.slurm" ] ; then
+if [ -f "submit.${host}.slurm" ] ; then
     useslurm=true
 else
     useslurm=false

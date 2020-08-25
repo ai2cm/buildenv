@@ -35,6 +35,13 @@ nthreads=""     # number of threads to use for parallel builds
 mpilaunch=""    # command to launch an MPI executable (e.g. aprun)
 installdir=""   # directory where libraries are installed
 
+# set default value for useslurm based on whether a submit script exists
+envdir=`dirname $0`
+if [ -f "${envdir}/submit.${host}.slurm" ] ; then
+    useslurm=true
+else
+    useslurm=false
+fi
 # setup machine specifics
 if [ "`hostname | grep daint`" != "" ] ; then
     . /etc/bash.bashrc
@@ -82,12 +89,7 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
     installdir="/project/d107/install/tsa"
     export CUDA_ARCH=sm_70
 fi
-envdir=`dirname $0`
-if [ -f "${envdir}/submit.${host}.slurm" ] ; then
-    useslurm=true
-else
-    useslurm=false
-fi
+
 # make sure everything is set
 test -n "${host}" || exitError 2001 ${LINENO} "Variable <host> could not be set (unknown machine `hostname`?)"
 test -n "${queue}" || exitError 2002 ${LINENO} "Variable <queue> could not be set (unknown machine `hostname`?)"

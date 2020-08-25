@@ -34,7 +34,7 @@ if [ "${useslurm}" = true ] ; then
     /bin/sed -i 's|<NTASKS>|1|g' ${SCRIPT}
     /bin/sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
     /bin/sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
-    /bin/sed -i 's|<PARTITION>|'"cscsci"'|g' ${SCRIPT}
+
     # The contents of the resulting script to be submitted
     echo "Submitting slurm script:"
     cat ${SCRIPT}

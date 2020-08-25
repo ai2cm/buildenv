@@ -25,10 +25,7 @@ if [ "${useslurm}" = true ] ; then
     if [ -z ${OUT} ] ; then
 	OUT="Job${BUILD_ID}.out"
     fi
-    echo "out is "
-    echo ${OUT}
-    echo "before sed"
-    cat ${SCRIPT}
+   
     # These should get set here
     /bin/sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
     /bin/sed -i 's|<CMD>|'"bash ${RUN_CMD_FILE}"'|g' ${SCRIPT}

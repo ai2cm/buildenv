@@ -82,8 +82,8 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
     installdir="/project/d107/install/tsa"
     export CUDA_ARCH=sm_70
 fi
-
-if [ -f "submit.${host}.slurm" ] ; then
+envdir=`dirname $0`
+if [ -f "${envdir}/submit.${host}.slurm" ] ; then
     useslurm=true
 else
     useslurm=false

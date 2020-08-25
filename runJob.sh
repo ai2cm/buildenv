@@ -3,7 +3,9 @@ RUN_CMD_FILE=$1
 SCRIPT=$2
 OUT=$3
 maxsleep=9000
-. machineEnvironment.sh
+echo `pwd`
+echo `ls -lh`
+./machineEnvironment.sh
 if [ "${useslurm}" = true ] ; then
     # check if SLURM script exists, if not, use the standard one defined by the host
     test -f ${SCRIPT} || SCRIPT="submit.${host}.slurm"

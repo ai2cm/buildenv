@@ -46,7 +46,6 @@ if [ "`hostname | grep daint`" != "" ] ; then
     mpilaunch="srun"
     installdir=/project/d107/install/${host}
     export CUDA_ARCH=sm_60
-    useslurm=true
 elif [ "`hostname | grep papaya`" != "" ] ; then
     alias module=echo
     export host="papaya"
@@ -54,7 +53,6 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
     nthreads=6
     mpilaunch="mpirun"
     installdir=/Users/OliverF/Desktop/install
-    useslurm=false
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     alias module=echo
     export host="gce-cpu"
@@ -62,7 +60,6 @@ elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     nthreads=6
     mpilaunch="mpirun"
     installdir=/tmp
-    useslurm=false
     export CUDA_ARCH=sm_60
 elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; then
     . /etc/bashrc && true # In some conditions the omitted true triggered an error.
@@ -74,7 +71,6 @@ elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; th
     queue="debug"
     nthreads=1
     mpilaunch="srun"
-    useslurm=true
     installdir="/project/d107/install/${host}"
     export CUDA_ARCH=sm_37
 elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; then
@@ -83,18 +79,21 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
     queue="debug"
     nthreads=1
     mpilaunch="srun"
-    useslurm=true
     installdir="/project/d107/install/tsa"
     export CUDA_ARCH=sm_70
 fi
 
+if [ test -f "$submit.${host}.slurm" ] ; then
+    useslurm=true
+else
+    useslurm=false
 # make sure everything is set
 test -n "${host}" || exitError 2001 ${LINENO} "Variable <host> could not be set (unknown machine `hostname`?)"
 test -n "${queue}" || exitError 2002 ${LINENO} "Variable <queue> could not be set (unknown machine `hostname`?)"
 test -n "${nthreads}" || exitError 2003 ${LINENO} "Variable <nthreads> could not be set (unknown machine `hostname`?)"
 test -n "${mpilaunch}" || exitError 2004 ${LINENO} "Variable <mpilaunch> could not be set (unknown machine `hostname`?)"
 test -n "${installdir}" || exitError 2005 ${LINENO} "Variable <installdir> could not be set (unknown machine `hostname`?)"
-test -n "${useslurm}" || exitError 2004 ${LINENO} "Variable <useslurm> could not be set (unknown machine `hostname`?)"
+
 # export installation directory
 export INSTALL_DIR="${installdir}"
 

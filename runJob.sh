@@ -25,6 +25,10 @@ if [ "${useslurm}" = true ] ; then
     if [ -z ${OUT+x} ] ; then
 	OUT="Job${BUILD_ID}.out"
     fi
+    echo "out is "
+    echo ${OUT}
+    echo "before sed"
+    cat ${SCRIPT}
     # These should get set here
     /bin/sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
     /bin/sed -i 's|<CMD>|'"bash ${RUN_CMD_FILE}"'|g' ${SCRIPT}
@@ -35,6 +39,7 @@ if [ "${useslurm}" = true ] ; then
     /bin/sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
     /bin/sed -i 's|<PARTITION>|'"cscsci"'|g' ${SCRIPT}
     # The contents of the resulting script to be submitted
+    echo "Submitting slurm script:"
     cat ${SCRIPT}
 
     # submit SLURM job

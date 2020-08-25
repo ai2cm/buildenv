@@ -22,7 +22,7 @@ if [ "${useslurm}" = true ] ; then
 
     # setup SLURM job
     # set a generic output filename if it's not provided as an input
-    if [ -z ${OUT+x} ] ; then
+    if [ -z ${OUT} ] ; then
 	OUT="Job${BUILD_ID}.out"
     fi
     echo "out is "

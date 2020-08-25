@@ -87,6 +87,7 @@ if [ test -f "$submit.${host}.slurm" ] ; then
     useslurm=true
 else
     useslurm=false
+fi
 # make sure everything is set
 test -n "${host}" || exitError 2001 ${LINENO} "Variable <host> could not be set (unknown machine `hostname`?)"
 test -n "${queue}" || exitError 2002 ${LINENO} "Variable <queue> could not be set (unknown machine `hostname`?)"

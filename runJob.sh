@@ -5,9 +5,8 @@ OUT=$3
 maxsleep=9000
 envdir=`dirname $0`
 . ${envdir}/machineEnvironment.sh
-echo "use slurm"
-echo ${useslurm}
-echo "${useslurm}" = true
+
+
 if [ "${useslurm}" = true ] ; then
     # check if SLURM script exists, if not, use the standard one defined by the host
     test -f ${SCRIPT} || SCRIPT="${envdir}/submit.${host}.slurm"
@@ -23,7 +22,7 @@ if [ "${useslurm}" = true ] ; then
 
     # setup SLURM job
     # set a generic output filename if it's not provided as an input
-    if [ ${OUT} == "" ] ; then
+    if [ -z ${OUT+x} ] ; then
 	OUT="Job${BUILD_ID}.out"
     fi
     # These should get set here

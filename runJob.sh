@@ -3,20 +3,21 @@ RUN_CMD_FILE=$1
 SCRIPT=$2
 OUT=$3
 maxsleep=9000
+envdir=`dirname $0`
+echo ${envdir}
 echo `pwd`
-echo `ls -lh`
-./machineEnvironment.sh
+. ${envdir}/machineEnvironment.sh
 if [ "${useslurm}" = true ] ; then
     # check if SLURM script exists, if not, use the standard one defined by the host
-    test -f ${SCRIPT} || SCRIPT="submit.${host}.slurm"
+    test -f ${SCRIPT} || SCRIPT="${envdir}/submit.${host}.slurm"
     # test if the SLURM script exists, if not useslurm should not be true
     test -f ${SCRIPT} || exitError 1252 ${LINENO} "cannot find script ${SCRIPT}"
 
     # load slurm tools
-    if [ ! -f  slurmTools.sh ] ; then
-	exitError 1203 ${LINENO} "could not find slurmTools.sh"
+    if [ ! -f  ${envdir}/slurmTools.sh ] ; then
+	exitError 1203 ${LINENO} "could not find ${envdir}/slurmTools.sh"
     fi
-    . slurmTools.sh
+    . ${envdir}/slurmTools.sh
 
 
     # setup SLURM job

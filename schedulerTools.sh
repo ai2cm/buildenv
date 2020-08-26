@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SLURM tools
+# SCHEDULER tools (e.g. slurm)
 
 ##################################################
 # functions
@@ -127,4 +127,48 @@ function launch_job {
   rm ${sacct_log}
 }
 
+# Function to launch a job with the scheduler, or just run it if the scheduler is nonw
+function run_script {
+    local RUN_CMD_FILE=$1
+    local SCHEDULER_SCRIPT=$2
+    local OUT=$3
+    local envdir=`dirname $0`
+    if [ "${scheduler}" = "slurm" ] ; then
+	local maxsleep=9000
+	# check if the slurm script exists, if not, use the standard one defined by the host
+	test -f ${SCHEDULER_SCRIPT} || SCHEDULER_SCRIPT="${envdir}/submit.${host}.slurm"
+	# test if the slurm script exists, if not, scheduler should not be slurm
+	test -f ${SCHEDULER_SCRIPT} || exitError 1252 ${LINENO} "cannot find script ${SCHEDULER_SCRIPT}"
 
+	# setup SLURM job
+	# set a generic output filename if it's not provided as an input
+	if [ -z ${OUT} ] ; then
+	    OUT="Job${BUILD_ID}.out"
+	fi
+    
+	# These should get set here
+	/bin/sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
+	/bin/sed -i 's|<CMD>|'"bash ${RUN_CMD_FILE}"'|g' ${SCRIPT}
+	# These should be set before this script is called, but if not, will get these default values
+	/bin/sed -i 's|<NAME>|job|g' ${SCRIPT}
+	/bin/sed -i 's|<NTASKS>|1|g' ${SCRIPT}
+	/bin/sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
+	/bin/sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
+	
+	# The contents of the resulting script to be submitted
+	echo "Submitting slurm script:"
+	cat ${SCRIPT}
+
+	# submit SLURM job
+	launch_job ${SCRIPT} ${maxsleep}
+	if [ $? -ne 0 ] ; then
+	    exitError 1251 ${LINENO} "problem launching SLURM job ${SCRIPT}"
+	fi
+
+	# echo output of SLURM job
+	cat ${OUT}
+	rm ${OUT}
+
+    else
+	bash ${RUN_CMD_FILE}
+    fi

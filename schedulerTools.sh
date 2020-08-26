@@ -171,3 +171,4 @@ function run_script {
     else
 	bash ${RUN_CMD}
     fi
+}

@@ -147,12 +147,12 @@ function run_script {
 	OUT="${NAME}.out"
     
 	# These should get set here
-	/bin/sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
-	/bin/sed -i 's|<CMD>|'"bash ${RUN_CMD}"'|g' ${SCRIPT}
-	/bin/sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
-	/bin/sed -i 's|<NTASKS>|1|g' ${SCRIPT}
-	/bin/sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
-	/bin/sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
+	sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
+	sed -i 's|<CMD>|'"bash ${RUN_CMD}"'|g' ${SCRIPT}
+	sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
+	sed -i 's|<NTASKS>|1|g' ${SCRIPT}
+	sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
+	sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
 	
 	# The contents of the resulting script to be submitted
 	echo "Submitting slurm script:"

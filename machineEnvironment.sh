@@ -34,7 +34,13 @@ queue=""        # standard queue to submit jobs to
 nthreads=""     # number of threads to use for parallel builds
 mpilaunch=""    # command to launch an MPI executable (e.g. aprun)
 installdir=""   # directory where libraries are installed
+scheduler="none" # e.g. slurm
 
+# set default value for useslurm based on whether a submit script exists
+envdir=`dirname $0`
+if [ -f "${envdir}/submit.${host}.slurm" ] ; then
+    scheduler="slurm"
+fi
 # setup machine specifics
 if [ "`hostname | grep daint`" != "" ] ; then
     . /etc/bash.bashrc

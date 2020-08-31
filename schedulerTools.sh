@@ -133,13 +133,13 @@ function run_script {
     local NAME=$2
     local SCHEDULER_SCRIPT=$3
     local envdir=`dirname $0`
-    if [ "${scheduler}" = "slurm" ] ; then
+    if [ "${scheduler}" != "none" ] ; then
 	local maxsleep=9000
-	SCHEDULER_SCRIPT="${envdir}/submit.${host}.slurm"
+	test -f ${SCHEDULER_SCRIPT} || SCHEDULER_SCRIPT="${envdir}/submit.${host}.${scheduler}"
 	# test if the slurm script exists, if not, scheduler should not be slurm
 	test -f ${SCHEDULER_SCRIPT} || exitError 1252 ${LINENO} "cannot find script ${SCHEDULER_SCRIPT}"
 
-	# setup SLURM job
+	# setup job
 	# set a generic output filename if it's not provided as an input
 	if [ -z ${NAME} ] ; then
 	    NAME="JenkinsJob${BUILD_ID}"

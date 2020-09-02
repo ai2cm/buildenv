@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SLURM tools
+# SCHEDULER tools (e.g. slurm)
 
 ##################################################
 # functions
@@ -127,4 +127,48 @@ function launch_job {
   rm ${sacct_log}
 }
 
+# Function to launch a job with the scheduler, or just run it if the scheduler is nonw
+function run_script {
+    local RUN_CMD=$1
+    local NAME=$2
+    local SCHEDULER_SCRIPT=$3
+    local envdir=`dirname $0`
+    if [ "${scheduler}" != "none" ] ; then
+	local maxsleep=9000
+	test -f ${SCHEDULER_SCRIPT} || SCHEDULER_SCRIPT="${envdir}/submit.${host}.${scheduler}"
+	# test if the slurm script exists, if not, scheduler should not be slurm
+	test -f ${SCHEDULER_SCRIPT} || exitError 1252 ${LINENO} "cannot find script ${SCHEDULER_SCRIPT}"
 
+	# setup job
+	# set a generic output filename if it's not provided as an input
+	if [ -z ${NAME} ] ; then
+	    NAME="JenkinsJob${BUILD_ID}"
+	fi
+	OUT="${NAME}.out"
+    
+	# These should get set here
+	sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
+	sed -i 's|<CMD>|'"bash ${RUN_CMD}"'|g' ${SCRIPT}
+	sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
+	sed -i 's|<NTASKS>|1|g' ${SCRIPT}
+	sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
+	sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
+	
+	# The contents of the resulting script to be submitted
+	echo "Submitting slurm script:"
+	cat ${SCRIPT}
+
+	# submit SLURM job
+	launch_job ${SCRIPT} ${maxsleep}
+	if [ $? -ne 0 ] ; then
+	    exitError 1251 ${LINENO} "problem launching SLURM job ${SCRIPT}"
+	fi
+
+	# echo output of SLURM job
+	cat ${OUT}
+	rm ${OUT}
+
+    else
+	bash ${RUN_CMD}
+    fi
+}

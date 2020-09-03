@@ -61,18 +61,24 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
     installdir=/Users/OliverF/Desktop/install
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     alias module=echo
-    export host="gce-cpu"
+    export host="gce"
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"
     installdir=/tmp
+    if [ ! -z "`command -v nvidia-smi`" ] ; then
+        nvidia-smi 2>&1 1>/dev/null
+        if [ $? -eq 0 ] ; then
+            export CUDA_ARCH=sm_60
+        fi
+    fi
     export CUDA_ARCH=sm_60
 elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; then
     . /etc/bashrc && true # In some conditions the omitted true triggered an error.
     if [ "${NODE_NAME}" == kesch-pgi ] ; then
-	export host="kesch-pgi"
+        export host="kesch-pgi"
     else
-	export host="kesch"
+        export host="kesch"
     fi
     queue="debug"
     nthreads=1

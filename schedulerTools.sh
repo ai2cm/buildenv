@@ -133,6 +133,7 @@ function run_script {
     local NAME=$2
     local SCHEDULER_SCRIPT=$3
     local envdir=`dirname $0`
+    
     if [ "${scheduler}" != "none" ] ; then
 	local maxsleep=9000
 	test -f ${SCHEDULER_SCRIPT} || SCHEDULER_SCRIPT="${envdir}/submit.${host}.${scheduler}"

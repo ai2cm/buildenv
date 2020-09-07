@@ -169,6 +169,6 @@ function run_script {
 	rm ${OUT}
 
     else
-	bash ${RUN_CMD}
+	eval ${RUN_CMD}
     fi
 }

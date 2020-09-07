@@ -72,7 +72,6 @@ elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
             export CUDA_ARCH=sm_60
         fi
     fi
-    export CUDA_ARCH=sm_60
 elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; then
     . /etc/bashrc && true # In some conditions the omitted true triggered an error.
     if [ "${NODE_NAME}" == kesch-pgi ] ; then
@@ -93,6 +92,13 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
     mpilaunch="srun"
     installdir="/project/d107/install/tsa"
     export CUDA_ARCH=sm_70
+elif [ "${CIRCLECI}" == "true" ] ; then
+    alias module=echo
+    export host="circleci"
+    queue="normal"
+    nthreads=6
+    mpilaunch="mpirun"
+    installdir=/tmp
 fi
 
 # make sure everything is set

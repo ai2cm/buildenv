@@ -29,24 +29,22 @@ modulepathadd() {
 }
 
 # setup empty defaults
-host=""         # name of host
-queue=""        # standard queue to submit jobs to
-nthreads=""     # number of threads to use for parallel builds
-mpilaunch=""    # command to launch an MPI executable (e.g. aprun)
-installdir=""   # directory where libraries are installed
-scheduler="none" # e.g. slurm
+host=""          # name of host
+queue=""         # standard queue to submit jobs to
+nthreads=""      # number of threads to use for parallel builds
+mpilaunch=""     # command to launch an MPI executable (e.g. aprun)
+installdir=""    # directory where libraries are installed
+scheduler=""     # e.g. none, slurm, pbs
 
 # set default value for useslurm based on whether a submit script exists
 envdir=`dirname $0`
-if [ -f "${envdir}/submit.${host}.slurm" ] ; then
-    scheduler="slurm"
-fi
 # setup machine specifics
 if [ "`hostname | grep daint`" != "" ] ; then
     . /etc/bash.bashrc
     . /opt/modules/default/init/bash
     . /etc/bash.bashrc.local
     export host="daint"
+    scheduler="slurm"
     queue="normal"
     nthreads=8
     mpilaunch="srun"
@@ -55,6 +53,7 @@ if [ "`hostname | grep daint`" != "" ] ; then
 elif [ "`hostname | grep papaya`" != "" ] ; then
     alias module=echo
     export host="papaya"
+    scheduler="none"
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"
@@ -62,6 +61,7 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     alias module=echo
     export host="gce"
+    scheduler="none"
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"
@@ -80,6 +80,7 @@ elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; th
     else
         export host="kesch"
     fi
+    scheduler="slurm"
     queue="debug"
     nthreads=1
     mpilaunch="srun"
@@ -88,6 +89,7 @@ elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; th
 elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; then
     . /etc/bashrc
     export host="tsa"
+    scheduler="slurm"
     queue="debug"
     nthreads=1
     mpilaunch="srun"
@@ -98,6 +100,7 @@ fi
 # make sure everything is set
 test -n "${host}" || exitError 2001 ${LINENO} "Variable <host> could not be set (unknown machine `hostname`?)"
 test -n "${queue}" || exitError 2002 ${LINENO} "Variable <queue> could not be set (unknown machine `hostname`?)"
+test -n "${scheduler}" || exitError 2002 ${LINENO} "Variable <scheduler> could not be set (unknown machine `hostname`?)"
 test -n "${nthreads}" || exitError 2003 ${LINENO} "Variable <nthreads> could not be set (unknown machine `hostname`?)"
 test -n "${mpilaunch}" || exitError 2004 ${LINENO} "Variable <mpilaunch> could not be set (unknown machine `hostname`?)"
 test -n "${installdir}" || exitError 2005 ${LINENO} "Variable <installdir> could not be set (unknown machine `hostname`?)"

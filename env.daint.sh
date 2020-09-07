@@ -6,4 +6,4 @@
 
 module load daint-gpu
 module load cray-python
-
+module load nvidia_math_libs/2020_207

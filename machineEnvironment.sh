@@ -30,11 +30,11 @@ modulepathadd() {
 
 # setup empty defaults
 host=""          # name of host
+scheduler=""     # none, slurm, pbs, ...
 queue=""         # standard queue to submit jobs to
 nthreads=""      # number of threads to use for parallel builds
 mpilaunch=""     # command to launch an MPI executable (e.g. aprun)
 installdir=""    # directory where libraries are installed
-scheduler=""     # e.g. none, slurm, pbs
 
 # set default value for useslurm based on whether a submit script exists
 envdir=`dirname $0`
@@ -97,6 +97,7 @@ elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; the
 elif [ "${CIRCLECI}" == "true" ] ; then
     alias module=echo
     export host="circleci"
+    scheduler="none"
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"

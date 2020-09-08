@@ -150,7 +150,7 @@ function run_command {
     
 	# These should get set here
 	sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
-	sed -i 's|<CMD>|'"bash ${CMD}"'|g' ${SCRIPT}
+	sed -i 's|<CMD>|'"${CMD}"'|g' ${SCRIPT}
 	sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
 	sed -i 's|<NTASKS>|1|g' ${SCRIPT}
 	sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}

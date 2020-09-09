@@ -1,7 +1,11 @@
 # Build Environment
+`buildenv` is a repository that tries to "abstract" the specific environments on different systems in order to simplify writing bash scripts on these systems and make results reproducible (for exmple for a CI system). 
 
-`buildenv` is a repository that tries to "abstract" the specific environments on different systems in order to simplify writing bash scripts on these systems and make results reproducible (for exmple for a CI system). Reproducible in the sense that multiple CI plans or projects are using the same environment for testing and running, in order to avoid conflicts later on. Depending on the use-case, this repository can simply be cloned or sub-moduled into a working environment.
+## Goals
+- Provide a set of standard environmental variables in order to avoid a proliferation of system-specific conditionals in testing, building and deployment plans.
+- Encourage different projects or CI plans to use the same environment for testing and building, in order to avoid conflicts further down the pipeline.
 
+## Components
 It currently contains the following components:
 - Defines a set of standardized variables (host, scheduler, queue, nthreads, mpilaunch, ...) in `machineEnvironment.sh`
 - Defines a machine-specific environment (module load ..., export LD_LIBRARY_PATH=...) in `env.${host}.sh` scripts that can be sourced.
@@ -10,9 +14,8 @@ It currently contains the following components:
 - Provides a set of tools for working with a system that uses modules in `moduleTools.sh`.
 - Provides functionality to issue errors and warnings in `machineEnvironment.sh`.
 
-# Usage
-
-The functionality of `buildenv` is typically accessed from a shell script as in the bash script below. 
+## Usage
+The functionality of `buildenv` is typically accessed from a shell script as in the bash script below. Depending on the use-case, this repository can simply be cloned or sub-moduled into a working environment.
 
 ```bash
 #!/bin/bash
@@ -42,12 +45,10 @@ run_command "echo 'This submits a job on systems which have a batch system'"
 
 ```
 
-# Example
-
+## Example
 An example of how `buildenv` is being used in a Jenkins CI plan can be found [here](https://github.com/VulcanClimateModeling/fv3gfs-wrapper/tree/master/.jenkins).
 
-# Committing to this repository
-
+## Committing to this repository
 Changes to this repository can potentially have dangerous side-effects in all places that use `buildenv` and should be done with care & consideration. In general, it is good practice to do the following:
 - [ ] Open a PR and have somebody from the team familiar with `buildenv` and how it is used review it.
 - [ ] Notify team that you will be making a change to the `buildenv` to hold back with other PRs or pushes.
@@ -56,8 +57,7 @@ Changes to this repository can potentially have dangerous side-effects in all pl
 - [ ] Send a message to the team to notify everybody about the change and which plans you have manually triggered on CI.
 - [ ] Verify everything is working correctly.
 
-# Supported systems
-
+## Supported systems
 - daint: Piz Daint at CSCS in Lugano
 - gce: Google Cloud instances instantiated using the [jenkins-agent](https://console.cloud.google.com/compute/imagesDetail/projects/vcm-ml/global/images/jenkins-agent-1593727237?project=vcm-ml&authuser=1&folder&organizationId) image.
 - circleci: Circle CI instances

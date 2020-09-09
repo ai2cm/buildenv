@@ -12,7 +12,7 @@ It currently contains the following components:
 
 # Usage
 
-The functionality of `buildenv` is typically accessed from a shell script in the following way...
+The functionality of `buildenv` is typically accessed from a shell script as in the bash script below. 
 
 ```bash
 #!/bin/bash
@@ -27,25 +27,19 @@ else
 fi
 
 # setup module environment and default queue
-if [ ! -f ${envloc}/env/machineEnvironment.sh ] ; then
-    echo "Error 1000 in $0 L${LINENO}: Could not find ${envloc}/env/machineEnvironment.sh"
-    exit 1
-fi
 . ${envloc}/env/machineEnvironment.sh
 
 # load machine dependent environment
-if [ ! -f ${envloc}/env/env.${host}.sh ] ; then
-    exitError 1001 ${LINENO} "could not find ${envloc}/env/env.${host}.sh"
-fi
 . ${envloc}/env/env.${host}.sh
 
-# load scheduler tools
-if [ ! -f ${envloc}/env/schedulerTools.sh ] ; then
-    exitError 1002 ${LINENO} "could not find ${envloc}/env/schedulerTools.sh"
-fi
+# load scheduler tools (provides run_command)
 . ${envloc}/env/schedulerTools.sh
 
-# rest of script
+# rest of script (which uses buildenv functionality)
+echo "I am running on host ${host} with scheduler ${scheduler}."
+run_command "echo 'This submits a job on systems which have a batch system'"
+...
+
 ```
 
 # Example

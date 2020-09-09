@@ -1,6 +1,6 @@
 # Build Environment
 
-`buildenv` is a repository that tries to "abstract" the specific environments on different systems in order to simplify writing bash scripts on these systems and make results reproducible (for exmple for a CI system). Depending on the use-case, this repository can simply be cloned or sub-moduled into a working environment.
+`buildenv` is a repository that tries to "abstract" the specific environments on different systems in order to simplify writing bash scripts on these systems and make results reproducible (for exmple for a CI system). Reproducible in the sense that multiple CI plans or projects are using the same environment for testing and running, in order to avoid conflicts later on. Depending on the use-case, this repository can simply be cloned or sub-moduled into a working environment.
 
 It currently contains the following components:
 - Defines a set of standardized variables (host, scheduler, queue, nthreads, mpilaunch, ...) in `machineEnvironment.sh`

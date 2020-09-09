@@ -49,7 +49,6 @@ An example of how `buildenv` is being used in a Jenkins CI plan can be found [he
 # Committing to this repository
 
 Changes to this repository can potentially have dangerous side-effects in all places that use `buildenv` and should be done with care & consideration. In general, it is good practice to do the following:
-- [ ] Only make single changes (e.g. don't combine changing an environment for a given system with a change in other functionality).
 - [ ] Open a PR and have somebody from the team familiar with `buildenv` and how it is used review it.
 - [ ] Notify team that you will be making a change to the `buildenv` to hold back with other PRs or pushes.
 - [ ] Merge PR (never on a Friday! never just before or during CSCS maintenance!).

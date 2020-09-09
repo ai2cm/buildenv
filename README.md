@@ -55,3 +55,10 @@ Changes to this repository can potentially have dangerous side-effects in all pl
 - [ ] Manually force CI plans to rebuild in order to make sure everything is ok.
 - [ ] Send a message to the team to notify everybody about the change and which plans you have manually triggered on CI.
 - [ ] Verify everything is working correctly.
+
+# Supported systems
+
+- daint: Piz Daint at CSCS in Lugano
+- gce: Google Cloud instances instantiated using the [jenkins-agent](https://console.cloud.google.com/compute/imagesDetail/projects/vcm-ml/global/images/jenkins-agent-1593727237?project=vcm-ml&authuser=1&folder&organizationId) image.
+- circleci: Circle CI instances
+- papaya: Macintosh client

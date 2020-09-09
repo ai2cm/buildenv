@@ -72,28 +72,6 @@ elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
             export CUDA_ARCH=sm_60
         fi
     fi
-elif [ "`hostname | grep kesch`" != "" -o "`hostname | grep escha`" != "" ] ; then
-    . /etc/bashrc && true # In some conditions the omitted true triggered an error.
-    if [ "${NODE_NAME}" == kesch-pgi ] ; then
-        export host="kesch-pgi"
-    else
-        export host="kesch"
-    fi
-    scheduler="slurm"
-    queue="debug"
-    nthreads=1
-    mpilaunch="srun"
-    installdir="/project/d107/install/${host}"
-    export CUDA_ARCH=sm_37
-elif [ "`hostname | grep arolla`" != "" -o "`hostname | grep tsa`" != "" ] ; then
-    . /etc/bashrc
-    export host="tsa"
-    scheduler="slurm"
-    queue="debug"
-    nthreads=1
-    mpilaunch="srun"
-    installdir="/project/d107/install/tsa"
-    export CUDA_ARCH=sm_70
 elif [ "${CIRCLECI}" == "true" ] ; then
     alias module=echo
     export host="circleci"

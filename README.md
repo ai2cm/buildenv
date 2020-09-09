@@ -52,8 +52,7 @@ Changes to this repository can potentially have dangerous side-effects in all pl
 - [ ] Only make single changes (e.g. don't combine changing an environment for a given system with a change in other functionality).
 - [ ] Open a PR and have somebody from the team familiar with `buildenv` and how it is used review it.
 - [ ] Notify team that you will be making a change to the `buildenv` to hold back with other PRs or pushes.
-- [ ] Merge PR (never on a Friday!).
+- [ ] Merge PR (never on a Friday! never just before or during CSCS maintenance!).
 - [ ] Manually force CI plans to rebuild in order to make sure everything is ok.
 - [ ] Send a message to the team to notify everybody about the change and which plans you have manually triggered on CI.
-- [ ] Make sure everything is working correctly.
-- [ ] Give a heads up to the team.
+- [ ] Verify everything is working correctly.

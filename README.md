@@ -46,3 +46,14 @@ run_command "echo 'This submits a job on systems which have a batch system'"
 
 An example of how `buildenv` is being used in a Jenkins CI plan can be found [here](https://github.com/VulcanClimateModeling/fv3gfs-wrapper/tree/master/.jenkins).
 
+# Committing to this repository
+
+Changes to this repository can potentially have dangerous side-effects in all places that use `buildenv` and should be done with care & consideration. In general, it is good practice to do the following:
+- [ ] Only make single changes (e.g. don't combine changing an environment for a given system with a change in other functionality).
+- [ ] Open a PR and have somebody from the team familiar with `buildenv` and how it is used review it.
+- [ ] Notify team that you will be making a change to the `buildenv` to hold back with other PRs or pushes.
+- [ ] Merge PR (never on a Friday!).
+- [ ] Manually force CI plans to rebuild in order to make sure everything is ok.
+- [ ] Send a message to the team to notify everybody about the change and which plans you have manually triggered on CI.
+- [ ] Make sure everything is working correctly.
+- [ ] Give a heads up to the team.

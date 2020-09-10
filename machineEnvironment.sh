@@ -59,6 +59,7 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
     mpilaunch="mpirun"
     installdir=/Users/OliverF/Desktop/install
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
+    . /etc/profile
     alias module=echo
     export host="gce"
     scheduler="none"

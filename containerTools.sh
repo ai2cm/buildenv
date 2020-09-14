@@ -23,20 +23,18 @@ function get_container {
 function run_container {
     local IMAGE=$1
     local CMD=$2
-    local VOLUMES=$3
-    local FLAGS=$4
-    local PARALLEL=$5
+    local FLAGS=$3
+    local PARALLEL=$4
     if [ "${container_engine}" == "docker" ] ; then
-	local FLAGS="--rm"
+	local FLAGS="--rm ${FLAGS}"
     fi
     if  [ "${container_engine}" == "sarus" ] ; then
 	local IMAGE=load/library/${IMAGE}
-	local FLAGS=""
 	if ${PARALLEL} ; then
 	    container_engine="srun sarus"
-	    FLAGS="--mpi"
+	    FLAGS="--mpi ${FLAGS}"
 	fi
     fi
     
-    ${container_engine} run ${FLAGS} ${VOLUMES} ${IMAGE} ${CMD}
+    ${container_engine} run ${FLAGS} "${IMAGE}" "${CMD}"
 }

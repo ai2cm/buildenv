@@ -20,7 +20,7 @@ function get_container {
     fi 
 }
 
-function run_container{
+function run_container {
     local IMAGE=$1
     local CMD=$2
     local VOLUMES=$3
@@ -40,4 +40,3 @@ function run_container{
     
     ${container_engine} run ${FLAGS} ${VOLUMES} ${IMAGE} ${CMD}
 }
-

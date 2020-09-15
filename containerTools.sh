@@ -31,10 +31,10 @@ function run_container {
     if  [ "${container_engine}" == "sarus" ] ; then
 	local IMAGE=load/library/${IMAGE}
 	if ${PARALLEL} ; then
-	    container_engine="srun sarus"
-	    FLAGS="--mpi ${FLAGS}"
+	    local PARALLEL_RUN="srun"
+	    local FLAGS="--mpi ${FLAGS}"
 	fi
     fi
     
-    ${container_engine} run ${FLAGS} "${IMAGE}" "${CMD}"
+    ${PARALLEL_RUN} ${container_engine} run ${FLAGS} "${IMAGE}" "${CMD}"
 }

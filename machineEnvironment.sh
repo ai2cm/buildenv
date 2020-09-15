@@ -35,6 +35,7 @@ queue=""         # standard queue to submit jobs to
 nthreads=""      # number of threads to use for parallel builds
 mpilaunch=""     # command to launch an MPI executable (e.g. aprun)
 installdir=""    # directory where libraries are installed
+container_engine=""  # Engine for running containers, e.g. docker, sarus, singuilarity
 
 # set default value for useslurm based on whether a submit script exists
 envdir=`dirname $0`
@@ -48,7 +49,8 @@ if [ "`hostname | grep daint`" != "" ] ; then
     queue="normal"
     nthreads=8
     mpilaunch="srun"
-    installdir=/project/d107/install/${host}
+    installdir=/project/d107/install/
+    container_engine="sarus"
     export CUDA_ARCH=sm_60
 elif [ "`hostname | grep papaya`" != "" ] ; then
     alias module=echo
@@ -58,6 +60,7 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
     nthreads=6
     mpilaunch="mpirun"
     installdir=/Users/OliverF/Desktop/install
+    container_engine="docker"
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     . /etc/profile
     alias module=echo
@@ -67,6 +70,7 @@ elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     nthreads=6
     mpilaunch="mpirun"
     installdir=/tmp
+    container_engine="docker"
     if [ ! -z "`command -v nvidia-smi`" ] ; then
         nvidia-smi 2>&1 1>/dev/null
         if [ $? -eq 0 ] ; then
@@ -81,6 +85,7 @@ elif [ "${CIRCLECI}" == "true" ] ; then
     nthreads=6
     mpilaunch="mpirun"
     installdir=/tmp
+    container_engine="docker"
 fi
 
 # make sure everything is set
@@ -90,7 +95,7 @@ test -n "${scheduler}" || exitError 2002 ${LINENO} "Variable <scheduler> could n
 test -n "${nthreads}" || exitError 2003 ${LINENO} "Variable <nthreads> could not be set (unknown machine `hostname`?)"
 test -n "${mpilaunch}" || exitError 2004 ${LINENO} "Variable <mpilaunch> could not be set (unknown machine `hostname`?)"
 test -n "${installdir}" || exitError 2005 ${LINENO} "Variable <installdir> could not be set (unknown machine `hostname`?)"
-
+test -n "${container_engine}" || exitError 2005 ${LINENO} "Variable <container_engine> could not be set (unknown machine `hostname`?)"
 # export installation directory
 export INSTALL_DIR="${installdir}"
 

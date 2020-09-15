@@ -8,16 +8,14 @@
 #SBATCH --time=00:45:00
 #SBATCH --gres=gpu:1
 #SBATCH --partition=cscsci
-#SBATCH --account=d107
+
 
 ########################################################
 
 set -x
 export OMP_NUM_THREADS=<CPUSPERTASK>
-export MPICH_RDMA_ENABLED_CUDA=1
-export MPICH_G2G_PIPELINE=256
 export CRAY_CUDA_PROXY=0
-
+<G2G>
 <CMD>
 
 ########################################################

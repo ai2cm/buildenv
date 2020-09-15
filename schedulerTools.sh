@@ -131,7 +131,8 @@ function launch_job {
 function run_command {
     local CMD=$1
     local NAME=$2
-    local SCRIPT=$3
+    local G2G=$3
+    local SCRIPT=$4
     
     if [ "${scheduler}" != "none" ] ; then
 	local maxsleep=9000
@@ -147,9 +148,12 @@ function run_command {
 	    NAME="JenkinsJob${BUILD_ID}"
 	fi
 	OUT="${NAME}.out"
-    
+	if [ ${G2G} == "true" ] ; then
+	    G2G_FLAGS="export MPICH_RDMA_ENABLED_CUDA=1\nexport MPICH_G2G_PIPELINE=256"
+	fi
 	# These should get set here
 	sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
+	sed -i 's|<G2G>|'"${G2G_FLAGS}"'|g' ${SCRIPT}
 	sed -i 's|<CMD>|'"${CMD}"'|g' ${SCRIPT}
 	sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
 	sed -i 's|<NTASKS>|1|g' ${SCRIPT}

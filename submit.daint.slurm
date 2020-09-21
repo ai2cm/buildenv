@@ -2,6 +2,7 @@
 #SBATCH --constraint=gpu
 #SBATCH --job-name=<NAME>
 #SBATCH --ntasks=<NTASKS>
+#SBATCH --nodes=<NUM_NODES>
 #SBATCH --ntasks-per-node=<NTASKSPERNODE>
 #SBATCH --cpus-per-task=<CPUSPERTASK>
 #SBATCH --output=<OUTFILE>

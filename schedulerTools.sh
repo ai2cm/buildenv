@@ -157,6 +157,7 @@ function run_command {
 	sed -i 's|<CMD>|'"${CMD}"'|g' ${SCRIPT}
 	sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
 	sed -i 's|<NTASKS>|1|g' ${SCRIPT}
+	sed -i 's|<NUM_NODES>|1|g' ${SCRIPT}
 	sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
 	sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
 	

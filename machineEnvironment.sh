@@ -30,7 +30,6 @@ modulepathadd() {
 
 # setup empty defaults
 host=""          # name of host
-scheduler=""     # none, slurm, pbs, ...
 queue=""         # standard queue to submit jobs to
 nthreads=""      # number of threads to use for parallel builds
 mpilaunch=""     # command to launch an MPI executable (e.g. aprun)
@@ -45,13 +44,15 @@ if [ "`hostname | grep daint`" != "" ] ; then
     . /opt/modules/default/init/bash
     . /etc/bash.bashrc.local
     export host="daint"
-    scheduler="slurm"
     queue="normal"
     nthreads=8
     mpilaunch="srun"
     installdir=/project/d107/install/
     container_engine="sarus"
     export CUDA_ARCH=sm_60
+    if [ -z "${scheduler}" ] ; then
+        export scheduler="slurm"
+    fi
 elif [ "`hostname | grep papaya`" != "" ] ; then
     alias module=echo
     export host="papaya"

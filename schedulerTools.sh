@@ -77,6 +77,7 @@ function launch_job {
   squeue_out=`squeue -o "%.20i %.20u %T" -h -j "${jobid}" 2>/dev/null`
   echo "${squeue_out}" | grep "^ *${jobid} " &> /dev/null
   if [ $? -eq 0 ] ; then
+      cat ${OUT}
       exitError 7207 ${LINENO} "batch job ${script} with ID ${jobid} on host ${slave} did not finish"
   fi
 

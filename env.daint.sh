@@ -4,8 +4,8 @@
 # environments for the dycore and the Fortran parts. Namely, the following
 # functions must be defined in this file:
 
-module swap PrgEnv-cray PrgEnv-gnu
 module load daint-gpu
+module swap PrgEnv-cray PrgEnv-gnu
 module load cray-python
 module load cray-mpich
 module load Boost

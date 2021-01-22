@@ -52,8 +52,10 @@ if [ "`hostname | grep daint`" != "" ] ; then
     installdir=/project/s1053/install/
     container_engine="sarus"
     export CUDA_ARCH=sm_60
-    if [ -n "$GOOGLE_APPLICATION_CREDENTIALS" ] ; then
-        export GOOGLE_APPLICATION_CREDENTIALS=/users/olifu/.gc_cred/jenkins-sa-key.json
+    if [ -n "$JENKINS_HOME" ] ; then
+        if [ -z "$GOOGLE_APPLICATION_CREDENTIALS" ] ; then
+            export GOOGLE_APPLICATION_CREDENTIALS=/users/olifu/.gc_cred/jenkins-sa-key.json
+        fi
     fi
 elif [ "`hostname | grep papaya`" != "" ] ; then
     alias module=echo

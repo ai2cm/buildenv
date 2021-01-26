@@ -36,7 +36,7 @@ nthreads=""      # number of threads to use for parallel builds
 mpilaunch=""     # command to launch an MPI executable (e.g. aprun)
 installdir=""    # directory where libraries are installed
 container_engine=""  # Engine for running containers, e.g. docker, sarus, singuilarity
-
+python_env="" # Preferred environment in which to run python code, e.g. virtualenv, container 
 # set default value for useslurm based on whether a submit script exists
 envdir=`dirname $0`
 # setup machine specifics
@@ -51,6 +51,7 @@ if [ "`hostname | grep daint`" != "" ] ; then
     mpilaunch="srun"
     installdir=/project/s1053/install/
     container_engine="sarus"
+    python_env="virtualenv"
     export CUDA_ARCH=sm_60
 elif [ "`hostname | grep papaya`" != "" ] ; then
     alias module=echo
@@ -61,6 +62,7 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
     mpilaunch="mpirun"
     installdir=/Users/OliverF/Desktop/install
     container_engine="docker"
+    python_env="container"
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     . /etc/profile
     alias module=echo
@@ -71,6 +73,7 @@ elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     mpilaunch="mpirun"
     installdir=/tmp
     container_engine="docker"
+    python_env="container"
     if [ ! -z "`command -v nvidia-smi`" ] ; then
         nvidia-smi 2>&1 1>/dev/null
         if [ $? -eq 0 ] ; then
@@ -86,6 +89,7 @@ elif [ "${CIRCLECI}" == "true" ] ; then
     mpilaunch="mpirun"
     installdir=/tmp
     container_engine="docker"
+    python_env="container"
 fi
 
 # make sure everything is set
@@ -96,6 +100,7 @@ test -n "${nthreads}" || exitError 2003 ${LINENO} "Variable <nthreads> could not
 test -n "${mpilaunch}" || exitError 2004 ${LINENO} "Variable <mpilaunch> could not be set (unknown machine `hostname`?)"
 test -n "${installdir}" || exitError 2005 ${LINENO} "Variable <installdir> could not be set (unknown machine `hostname`?)"
 test -n "${container_engine}" || exitError 2005 ${LINENO} "Variable <container_engine> could not be set (unknown machine `hostname`?)"
+test -n "${python_env}" || exitError 2005 ${LINENO} "Variable <python_env> could not be set (unknown machine `hostname`?)"
 # export installation directory
 export INSTALL_DIR="${installdir}"
 

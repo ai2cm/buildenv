@@ -36,7 +36,7 @@ nthreads=""      # number of threads to use for parallel builds
 mpilaunch=""     # command to launch an MPI executable (e.g. aprun)
 installdir=""    # directory where libraries are installed
 container_engine=""  # Engine for running containers, e.g. docker, sarus, singuilarity
-python_env="" # Preferred environment in which to run python code, e.g. virtualenv, container 
+python_env=""    # Preferred environment in which to run python code, e.g. virtualenv, container 
 # set default value for useslurm based on whether a submit script exists
 envdir=`dirname $0`
 # setup machine specifics

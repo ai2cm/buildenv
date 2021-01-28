@@ -19,5 +19,4 @@ export MPICH_RDMA_ENABLED_CUDA=1
 module switch gcc/8.3.0 gcc/8.1.0
 
 # the eve toolchain requires a clang-format executable, we point it to the right place
-export CLANG_FORMAT_EXECUTABLE=`/project/s1053/install/venv/vcm_1.0/bin/clang-format`
-
+export CLANG_FORMAT_EXECUTABLE='/project/s1053/install/venv/vcm_1.0/bin/clang-format'

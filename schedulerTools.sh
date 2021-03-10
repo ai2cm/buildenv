@@ -47,15 +47,17 @@ function launch_job {
 
   # submit SLURM job
   local res=$(sbatch ${script} 2>&1)
-  if [ $? -ne 0 ] ; then
-      exitError 7204 ${LINENO} "problem submitting SLURM batch job"
-  fi
+  status=$?
   if [[ $res == *"QOSMaxSubmitJobPerUserLimit"* ]]; then
       echo "Partition chosen has to many jobs from us already, trying again with the normal partition."
       sed -i 's|--partition=.*|--partition=normal|g' ${script}
       res=`sbatch ${script}`
       if [ $? -ne 0 ] ; then
 	  exitError 7205 ${LINENO} "problem re-submitting SLURM batch job in normal queue"
+      fi
+  else
+      if [ $? -ne 0 ] ; then
+	  exitError 7204 ${LINENO} "problem submitting SLURM batch job"
       fi
   fi
   echo "${res}" | grep "^Submitted batch job [0-9][0-9]*$" || exitError 7206 ${LINENO} "problem determining job ID of SLURM job"

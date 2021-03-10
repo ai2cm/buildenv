@@ -10,6 +10,7 @@ module load cray-python
 module load cray-mpich
 module load Boost
 module load cudatoolkit
+module load graphviz
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH

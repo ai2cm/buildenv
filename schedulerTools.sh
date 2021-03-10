@@ -56,7 +56,7 @@ function launch_job {
 	  exitError 7205 ${LINENO} "problem re-submitting SLURM batch job in normal queue"
       fi
   else
-      if [ $? -ne 0 ] ; then
+      if [ $status -ne 0 ] ; then
 	  exitError 7204 ${LINENO} "problem submitting SLURM batch job"
       fi
   fi

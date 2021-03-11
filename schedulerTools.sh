@@ -60,6 +60,7 @@ function launch_job {
 	  exitError 7204 ${LINENO} "problem submitting SLURM batch job"
       fi
   fi
+  echo "Submit message: ${res}"
   echo "${res}" | grep "^Submitted batch job [0-9][0-9]*$" || exitError 7206 ${LINENO} "problem determining job ID of SLURM job"
   local jobid=`echo "${res}" | sed  's/^Submitted batch job //g'`
   test -n "${jobid}" || exitError 7207 ${LINENO} "problem determining job ID of SLURM job"

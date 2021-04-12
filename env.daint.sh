@@ -6,19 +6,14 @@
 
 module load daint-gpu
 module swap PrgEnv-cray PrgEnv-gnu
+module load cdt-cuda/20.11
+module load cudatoolkit/11.0.2_3.33-7.0.2.1_3.1__g1ba0366
 module load cray-python/3.8.5.0
-module load cray-mpich/7.7.16
 module load Boost/1.70.0-CrayGNU-20.11-python3
-module load cudatoolkit/10.2.89_3.29-7.0.2.1_3.5__g67354b4
+module switch gcc gcc/9.3.0
 module load graphviz/2.44.0
-
-# since gridtools does not play nice with gcc 8.3 we switch to 8.1
-module switch gcc gcc/8.1.0
 
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 export MPICH_RDMA_ENABLED_CUDA=1
-
-# the eve toolchain requires a clang-format executable, we point it to the right place
-export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-format

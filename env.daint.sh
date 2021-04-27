@@ -16,4 +16,13 @@ module load graphviz/2.44.0
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+
+# Setup RDMA for GPU. Set PIPE size to 256 (# of messages allowed in flight)
+# Turn as-soon-as-possible transfer (NEMESIS_ASYNC_PROGRESS) on
 export MPICH_RDMA_ENABLED_CUDA=1
+export MPICH_G2G_PIPELINE=256
+export MPICH_NEMESIS_ASYNC_PROGRESS=1
+export MPICH_MAX_THREAD_SAFETY=multiple
+
+# the eve toolchain requires a clang-format executable, we point it to the right place
+export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-format

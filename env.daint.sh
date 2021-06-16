@@ -9,7 +9,7 @@ module swap PrgEnv-cray PrgEnv-gnu
 module load cray-python/3.8.5.0
 module load cray-mpich/7.7.16
 module load Boost/1.70.0-CrayGNU-20.11-python3
-module load cudatoolkit/10.2.89_3.29-7.0.2.1_3.27__g67354b4
+module load cudatoolkit/11.0.2_3.34-7.0.2.1_4.6__g017096a
 module load graphviz/2.44.0
 
 # since gridtools does not play nice with gcc 8.3 we switch to 8.1

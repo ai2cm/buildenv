@@ -12,8 +12,7 @@ module load Boost/1.70.0-CrayGNU-20.11-python3
 module load cudatoolkit/11.2.0_3.36-7.0.2.1_2.2__g3ff9ab1
 module load graphviz/2.44.0
 
-# since gridtools does not play nice with gcc 8.3 we switch to 8.1
-module switch gcc gcc/8.1.0
+module switch gcc gcc/10.1.0
 
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")

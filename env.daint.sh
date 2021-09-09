@@ -9,7 +9,7 @@ module swap PrgEnv-cray PrgEnv-gnu
 module load cray-python/3.8.5.0
 module load cray-mpich/7.7.16
 module load Boost/1.70.0-CrayGNU-20.11-python3
-module load cudatoolkit/11.2.0_3.36-7.0.2.1_2.2__g3ff9ab1
+module load cudatoolkit/11.2.0_3.39-2.1__gf93aa1c
 module load graphviz/2.44.0
 
 module switch gcc gcc/10.1.0

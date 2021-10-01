@@ -14,6 +14,10 @@ module load graphviz/2.44.0
 
 module switch gcc gcc/10.1.0
 
+# load gridtools modules
+module load gridtools/1_1_3
+module load gridtools/2_1_0_b
+
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH

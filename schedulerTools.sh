@@ -149,8 +149,7 @@ function run_command {
 	local maxsleep=9000
 
 	# test if the slurm script exists, if not, scheduler should not be slurm
-	test -f "${SCRIPT}" || SCRIPT="`dirname $0`/env/submit.${host}.${scheduler}"
-	test -f "${SCRIPT}" || SCRIPT="`dirname $0`/../env/submit.${host}.${scheduler}"
+	test -f "${SCRIPT}" || SCRIPT="`dirname $0`/submit.${host}.${scheduler}"
 	test -f "${SCRIPT}" || exitError 1252 ${LINENO} "cannot find script ${SCRIPT}"
 
 	# setup job

@@ -16,8 +16,8 @@ module load /project/s1053/install/modulefiles/gcloud/303.0.0
 module switch gcc gcc/10.1.0
 
 # load gridtools modules
-module load /project/s1053/install/modulefiles/gcloud/gridtools/1_1_3
-module load /project/s1053/install/modulefiles/gcloud/gridtools/2_1_0
+module load /project/s1053/install/modulefiles/gridtools/1_1_3
+module load /project/s1053/install/modulefiles/gridtools/2_1_0
 
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")

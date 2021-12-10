@@ -27,7 +27,7 @@ showWarning()
 #
 # usage: launch_job script timeout
 
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+SCHEDULER_SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 function launch_job {
   local script=$1
@@ -151,7 +151,7 @@ function run_command {
 	local maxsleep=9000
 
 	# test if the slurm script exists, if not, scheduler should not be slurm
-	test -f "${SCRIPT}" || SCRIPT="${SCRIPT_DIR}/submit.${host}.${scheduler}"
+    test -f "${SCRIPT}" || SCRIPT="${SCHEDULER_SCRIPT_DIR}/submit.${host}.${scheduler}"
 	test -f "${SCRIPT}" || exitError 1252 ${LINENO} "cannot find script ${SCRIPT}"
 
 	# setup job

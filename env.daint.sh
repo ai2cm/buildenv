@@ -12,6 +12,7 @@ module load Boost/1.70.0-CrayGNU-20.11-python3
 module load cudatoolkit/11.2.0_3.39-2.1__gf93aa1c
 module load graphviz/2.44.0
 module load /project/s1053/install/modulefiles/gcloud/303.0.0
+module load nvidia-nsight-systems/2021.1.1.66-6c5c5cb
 
 module switch gcc gcc/10.1.0
 
@@ -27,9 +28,11 @@ export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 # Turn as-soon-as-possible transfer (NEMESIS_ASYNC_PROGRESS) on
 export MPICH_RDMA_ENABLED_CUDA=1
 export CRAY_CUDA_MPS=1
+export CRAY_CUDA_PROXY=0
 export MPICH_G2G_PIPELINE=256
 export MPICH_NEMESIS_ASYNC_PROGRESS=1
 export MPICH_MAX_THREAD_SAFETY=multiple
+export DOCKER_BUILDKIT=1
 
 # the eve toolchain requires a clang-format executable, we point it to the right place
 export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-format

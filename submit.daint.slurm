@@ -15,8 +15,7 @@
 
 set -x
 export OMP_NUM_THREADS=<CPUSPERTASK>
-export CRAY_CUDA_PROXY=0
-<G2G>
+
 <CMD>
 
 ########################################################

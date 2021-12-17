@@ -12,7 +12,6 @@ module load Boost/1.70.0-CrayGNU-20.11-python3
 module load cudatoolkit/11.2.0_3.39-2.1__gf93aa1c
 module load graphviz/2.44.0
 module load /project/s1053/install/modulefiles/gcloud/303.0.0
-module load nvidia-nsight-systems/2021.1.1.66-6c5c5cb
 
 module switch gcc gcc/10.1.0
 

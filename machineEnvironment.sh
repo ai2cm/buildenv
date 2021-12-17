@@ -83,6 +83,7 @@ elif [ "${CIRCLECI}" == "true" ] ; then
     scheduler="none"
     queue="normal"
     nthreads=6
+    mpilaunch="mpirun"
     container_engine="docker"
     python_env="container"
 fi

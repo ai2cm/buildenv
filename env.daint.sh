@@ -31,7 +31,6 @@ export CRAY_CUDA_PROXY=0
 export MPICH_G2G_PIPELINE=256
 export MPICH_NEMESIS_ASYNC_PROGRESS=1
 export MPICH_MAX_THREAD_SAFETY=multiple
-export DOCKER_BUILDKIT=1
 
 # the eve toolchain requires a clang-format executable, we point it to the right place
 export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-format

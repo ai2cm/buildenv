@@ -59,6 +59,7 @@ elif [ "`hostname | grep papaya`" != "" ] ; then
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"
+    installdir=/Users/OliverF/Desktop/install
     container_engine="docker"
     python_env="container"
 elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
@@ -69,6 +70,7 @@ elif [ "`hostname | grep ubuntu-1804`" != "" ] ; then
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"
+    installdir=/tmp
     container_engine="docker"
     python_env="container"
     if [ ! -z "`command -v nvidia-smi`" ] ; then
@@ -84,6 +86,7 @@ elif [ "${CIRCLECI}" == "true" ] ; then
     queue="normal"
     nthreads=6
     mpilaunch="mpirun"
+    installdir=/tmp
     container_engine="docker"
     python_env="container"
 fi

@@ -36,3 +36,4 @@ export MPICH_MAX_THREAD_SAFETY=multiple
 export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-format
 
 export PYTHONPATH=/project/s1053/install/serialbox/gnu/python:$PYTHONPATH
+export WHEEL_DIR=/project/s1053/install/wheeldir

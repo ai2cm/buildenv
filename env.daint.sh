@@ -6,14 +6,14 @@
 
 module load daint-gpu
 module swap PrgEnv-cray PrgEnv-gnu
-module load cray-python/3.8.5.0
-module load cray-mpich/7.7.16
-module load Boost/1.70.0-CrayGNU-20.11-python3
+module load cray-python/3.9.4.1
+module load cray-mpich/7.7.18
+module load Boost/1.78.0-CrayGNU-21.09-python3
 module load cudatoolkit/11.2.0_3.39-2.1__gf93aa1c
 module load graphviz/2.44.0
 module load /project/s1053/install/modulefiles/gcloud/303.0.0
 
-module switch gcc gcc/10.1.0
+module switch gcc gcc/10.3.0
 
 # load gridtools modules
 module load /project/s1053/install/modulefiles/gridtools/1_1_3

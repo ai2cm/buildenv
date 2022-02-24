@@ -14,7 +14,7 @@ module load graphviz/2.44.0
 module load /project/s1053/install/modulefiles/gcloud/303.0.0
 module load cray-hdf5
 
-module switch gcc gcc/8.3.0
+module switch gcc gcc/9.3.0
 module switch cray-python cray-python/3.8.2.1
 
 # load gridtools modules

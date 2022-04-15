@@ -25,6 +25,11 @@ NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 
+# gt4py files take longer to exist due to distributed filesystem
+
+export GT_CACHE_LOAD_RETRY_DELAY=500  # milliseconds
+export GT_CACHE_LOAD_RETRIES=10
+
 # Setup RDMA for GPU. Set PIPE size to 256 (# of messages allowed in flight)
 # Turn as-soon-as-possible transfer (NEMESIS_ASYNC_PROGRESS) on
 export MPICH_RDMA_ENABLED_CUDA=1

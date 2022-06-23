@@ -145,12 +145,11 @@ function run_command {
     local CMD=$1
     local NAME=$2
     local SCRIPT=$3
-    
-    if [ "${scheduler}" != "none" ] ; then
-	local maxsleep=9000
+    local MAXSLEEP=$(($4 * 60 * 60))
 
+    if [ "${scheduler}" != "none" ] ; then
 	# test if the slurm script exists, if not, scheduler should not be slurm
-    test -f "${SCRIPT}" || SCRIPT="${SCHEDULER_SCRIPT_DIR}/submit.${host}.${scheduler}"
+	test -f "${SCRIPT}" || SCRIPT="${SCHEDULER_SCRIPT_DIR}/submit.${host}.${scheduler}"
 	test -f "${SCRIPT}" || exitError 1252 ${LINENO} "cannot find script ${SCRIPT}"
 
 	# setup job
@@ -166,13 +165,13 @@ function run_command {
 	sed -i 's|<NTASKS>|1|g' ${SCRIPT}
 	sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
 	sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
-	
+
 	# The contents of the resulting script to be submitted
 	echo "Submitting slurm script:"
 	cat ${SCRIPT}
 
 	# submit SLURM job
-	launch_job ${SCRIPT} ${maxsleep}
+	launch_job ${SCRIPT} ${MAXSLEEP}
 	if [ $? -ne 0 ] ; then
 	    exitError 1251 ${LINENO} "problem launching SLURM job ${SCRIPT}"
 	fi

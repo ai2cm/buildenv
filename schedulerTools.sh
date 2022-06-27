@@ -145,7 +145,7 @@ function run_command {
     local CMD=$1
     local NAME=$2
     local SCRIPT=$3
-    local MAXSLEEP=$(($4 * 60 * 60))
+    local HOURS=$4
 
     if [ "${scheduler}" != "none" ] ; then
 	# test if the slurm script exists, if not, scheduler should not be slurm
@@ -158,20 +158,25 @@ function run_command {
 	    NAME="JenkinsJob${BUILD_ID}"
 	fi
 	OUT="${NAME}.out"
+
+	timeout="00:$(printf '%2d' $HOURS):00"
+
 	# These should get set here
-	sed -i 's|<OUTFILE>|'"${OUT}"'|g' ${SCRIPT}
-	sed -i 's|<CMD>|'"${CMD}"'|g' ${SCRIPT}
-	sed -i 's|<NAME>|'"${NAME}"'|g' ${SCRIPT}
-	sed -i 's|<NTASKS>|1|g' ${SCRIPT}
-	sed -i 's|<NTASKSPERNODE>|'"${nthreads}"'|g' ${SCRIPT}
-	sed -i 's|<CPUSPERTASK>|1|g' ${SCRIPT}
+	sed -i "s|<OUTFILE>|$OUT|g" $SCRIPT
+	sed -i "s|<CMD>|$CMD|g" $SCRIPT
+	sed -i "s|<NAME>|$NAME|g" $SCRIPT
+	sed -i "s|<NTASKS>|1|g" $SCRIPT
+	sed -i "s|<NTASKSPERNODE>|$nthreads|g" $SCRIPT
+	sed -i "s|<CPUSPERTASK>|1|g" $SCRIPT
+	sed -i "s|<TIMEOUT>|$timeout|g" $SCRIPT
 
 	# The contents of the resulting script to be submitted
 	echo "Submitting slurm script:"
-	cat ${SCRIPT}
+	cat $SCRIPT
 
 	# submit SLURM job
-	launch_job ${SCRIPT} ${MAXSLEEP}
+	seconds=$((HOURS * 60 * 60))
+	launch_job $SCRIPT $seconds
 	if [ $? -ne 0 ] ; then
 	    exitError 1251 ${LINENO} "problem launching SLURM job ${SCRIPT}"
 	fi

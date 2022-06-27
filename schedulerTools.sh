@@ -145,7 +145,7 @@ function run_command {
     local CMD=$1
     local NAME=$2
     local SCRIPT=$3
-    local HOURS=$4
+    local MINUTES=$4
 
     if [ "${scheduler}" != "none" ] ; then
 	# test if the slurm script exists, if not, scheduler should not be slurm
@@ -159,7 +159,7 @@ function run_command {
 	fi
 	OUT="${NAME}.out"
 
-	timeout="00:$(printf '%2d' $HOURS):00"
+	timeout="00:$(printf '%2d' $MINUTES):00"
 
 	# These should get set here
 	sed -i "s|<OUTFILE>|$OUT|g" $SCRIPT
@@ -175,8 +175,7 @@ function run_command {
 	cat $SCRIPT
 
 	# submit SLURM job
-	seconds=$((HOURS * 60 * 60))
-	launch_job $SCRIPT $seconds
+	launch_job $SCRIPT $((MINUTES * 60))
 	if [ $? -ne 0 ] ; then
 	    exitError 1251 ${LINENO} "problem launching SLURM job ${SCRIPT}"
 	fi

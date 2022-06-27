@@ -10,6 +10,7 @@
 #SBATCH --account=s1053
 #SBATCH --partition=cscsci
 
+# NOTE: time can be either in HH:MM:SS or simply minutes if an int
 
 ########################################################
 

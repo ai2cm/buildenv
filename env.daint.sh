@@ -33,11 +33,19 @@ export GT_CACHE_LOAD_RETRIES=10
 # Setup RDMA for GPU. Set PIPE size to 256 (# of messages allowed in flight)
 # Turn as-soon-as-possible transfer (NEMESIS_ASYNC_PROGRESS) on
 export MPICH_RDMA_ENABLED_CUDA=1
-export CRAY_CUDA_MPS=1
-export CRAY_CUDA_PROXY=0
 export MPICH_G2G_PIPELINE=256
 export MPICH_NEMESIS_ASYNC_PROGRESS=1
 export MPICH_MAX_THREAD_SAFETY=multiple
+
+# DO NOT TURN ON
+# Cray CUDA MPS virtualizes the memory space of the driver to allow
+# for multiple process to access the GPU "efficiently". Unfortunately
+# this is done _above_ the driver, therefore as CUDA change their memory
+# model it creates issues. Namely `mallocAsync` cannot be used (for memory
+# pooling)
+# export CRAY_CUDA_MPS=1
+# export CRAY_CUDA_PROXY=0
+
 
 # the eve toolchain requires a clang-format executable, we point it to the right place
 export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-format

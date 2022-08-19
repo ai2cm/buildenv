@@ -18,8 +18,7 @@ module switch gcc gcc/9.3.0
 module switch cray-python cray-python/3.8.2.1
 
 # load gridtools modules
-module load /project/s1053/install/modulefiles/gridtools/1_1_3
-module load /project/s1053/install/modulefiles/gridtools/2_1_0
+module load /project/s1053/install/modulefiles/gridtools/2_2_0
 
 NVCC_PATH=$(which nvcc)
 export CUDA_HOME=$(echo $NVCC_PATH | sed -e "s/\/bin\/nvcc//g")

@@ -51,3 +51,6 @@ export CLANG_FORMAT_EXECUTABLE=/project/s1053/install/venv/vcm_1.0/bin/clang-for
 
 export PYTHONPATH=/project/s1053/install/serialbox/gnu/python:$PYTHONPATH
 export WHEEL_DIR=/project/s1053/install/wheeldir
+
+# Since we are loading netcdf files from /project we need this
+export HDF5_USE_FILE_LOCKING=FALSE

@@ -7,7 +7,7 @@
 #SBATCH --output=<OUTFILE>
 #SBATCH --time=<TIMEOUT>
 #SBATCH --gres=gpu:1
-#SBATCH --account=s1053
+#SBATCH --account=go31
 #SBATCH --partition=cscsci
 
 # NOTE: time can be either in HH:MM:SS or simply minutes if an int
